@@ -1,30 +1,34 @@
-import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.PrintWriter;
 
+/*
+ * 		FILE: NegativeBalanceException.java
+ * 		AUTHOR: Alex Patel
+ * 		FOR: CSCI 306, 9/20/2014
+ */
 
-public class NegativeBalanceException extends BankAccount {
-	
+public class NegativeBalanceException extends Exception {
 	private double overdraft;
-	
-	NegativeBalanceException(double balance) {
-		super(balance);
+
+	public NegativeBalanceException(double exceed) {
+		super();
+		overdraft = exceed;
+
+		String file = "logfile.txt";
+
+
 		try {
-			PrintWriter out = new PrintWriter("logfile.txt");
-			out.println("Amount exceeds balance by $" + overdraft);
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
+			PrintWriter out = new PrintWriter(file);
+			out.println(toString());
+			out.close();
+		} catch (IOException e) {
+			System.out.println(e.getLocalizedMessage());
 		}
-		
+
 	}
 
-	
 	public String toString() {
-		return "NegativeBalanceException [overdraft=" + overdraft + "]";
+		return "Error: Amount exceeds balance by: " + overdraft;
 	}
-	
-	
-
-
-	
 
 }
